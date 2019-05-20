@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Catalogo Do Livro</string>
+    <string name="txt_cadastrar"> Cadastrar</string>
+    <string name="txt_pesquisar">Pesquisar</string>
+    <string name="txt_pesquisarpor">Pesquisar Por</string>
+    <string name="txt_pesquisar_todos">Todos</string>
+    <string name="txt_id">Id</string>
+    <string name="txt_titulo">Título</string>
+    <string name="txt_autor">Autor</string>
+    <string name="txt_ano">Ano</string>
+    <string name="btn_salva">Salvar</string>
+    <string name="btn_voltar">Volta</string>
+    <string name="titulo_activity_tela_cadastrar">Tela Cadastrar</string>
+</resources>
