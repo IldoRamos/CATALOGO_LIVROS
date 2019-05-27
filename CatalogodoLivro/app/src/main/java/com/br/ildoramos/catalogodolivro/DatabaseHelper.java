@@ -3,24 +3,27 @@ package com.br.ildoramos.catalogodolivro;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper  extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME="CATALOGO";
+public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME="catalogo";
     private static final int DATABASE_VERSION=3;
+
     private final String CREATE_TABLE_CATALOGO=
-            "CREATE TABLE catalogo(" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "titulo TEXT," +
+            "CREATE TABLE catalogo (" +
+                    " id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "titulo TEXT, " +
                     "autor TEXT," +
                     "ano INTEGER)";
 
-    public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+
+    public DatabaseHelper(Context context) {
+        super(context,DATABASE_NAME, null,DATABASE_VERSION);
     }
 
     @Override
@@ -30,42 +33,41 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    db.execSQL("DROP TABLE IF EXISTS catalogo");
-    onCreate(db);
 
+        db.execSQL("DROP TABLE IF EXISTS catalogo");
+        onCreate(db);
     }
 
     public Long inserir(ContentValues cv){
         SQLiteDatabase db = this.getWritableDatabase();
-        Long id = db.insert("catalogo",null, cv);
+        Long id = db.insert("catalogo",null,cv);
         return id;
     }
 
-    public List<ContentValues> pesquisarPorTitulo(String titulo){
+    public List<ContentValues> pesquisarPorTitulo (String titulo){
         String sql = "SELECT * FROM catalogo WHERE titulo LIKE?";
-        String where[] = new String[]{"%"+titulo+""};
-        return pesquisar(sql, where);
+        String where[]= new String[]{"%"+titulo+""};
+        return pesquisar(sql,where);
     }
 
     public List<ContentValues> pesquisarPorAno(int ano){
-        String sql = "SELECT *FROM catalogo WHERE ano=?";
+        String sql = "SELECT * FROM catalogo WHERE ano=?";
         String where[] = new String[]{String.valueOf(ano)};
-
-        return pesquisar(sql, where);
+        return pesquisar(sql,where);
     }
 
-    public  List<ContentValues> pesquisarTodos(){
-        String sql= "SELECT * FROM catalogo ORDER BY id";
-        String where[] =null;
-        return pesquisar(sql, where);
+
+    public List<ContentValues> pesquisarPorTodos(){
+        String sql = "SELECT * FROM catalogo ORDER BY id";
+        String where[] = null;
+        return pesquisar(sql,where);
     }
 
     private List<ContentValues> pesquisar(String sql, String[] where) {
         List<ContentValues> lista = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(sql,where);
-
-        if(cursor.moveToFirst()){
+        Cursor cursor = db.rawQuery(sql, where);
+        if (cursor.moveToFirst()){
             do{
                 ContentValues cv = new ContentValues();
                 cv.put("id",cursor.getInt(cursor.getColumnIndex("id")));
@@ -75,9 +77,11 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
 
                 lista.add(cv);
 
+
             }while (cursor.moveToNext());
         }
-        return lista;
+        return  lista;
     }
+
 
 }

@@ -8,20 +8,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-public class TelaPrincipal extends AppCompatActivity  implements View.OnClickListener {
+public class Principal extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnCadastrar;
     private Button btnPesquisar;
     private RadioGroup rdgPesquisarPor;
     private EditText edtPesquisar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_principal);
+        setContentView(R.layout.activity_principal);
 
-        btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCadastrar =findViewById(R.id.btnCadastrar);
         btnPesquisar = findViewById(R.id.btnPesquisar);
-        rdgPesquisarPor =findViewById(R.id.rdgpesquisarPor);
+        rdgPesquisarPor = findViewById(R.id.rdgPesquisarPor);
 
         edtPesquisar = findViewById(R.id.edtPesquisar);
 
@@ -36,17 +37,18 @@ public class TelaPrincipal extends AppCompatActivity  implements View.OnClickLis
         switch (v.getId()){
 
             case R.id.btnCadastrar:
-                intent = new Intent(this, TelaCadastrar.class);
+                intent = new Intent(this,TelaCadastro.class);
                 break;
 
             case R.id.btnPesquisar:
-                intent = new Intent(this,TelaPesquisar.class);
-                intent.putExtra("tipo", rdgPesquisarPor.getCheckedRadioButtonId());
-                intent.putExtra("chave", edtPesquisar.getText().toString());
-                break;
-        }
+                intent = new Intent(this,TelaPesquisa.class);
 
-        if(intent!=null){
+                intent.putExtra("tipo",rdgPesquisarPor.getCheckedRadioButtonId());
+                intent.putExtra("chave",edtPesquisar.getText().toString());
+                break;
+
+        }
+        if (intent!=null){
             startActivity(intent);
         }
     }
